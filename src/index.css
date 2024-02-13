@@ -5,9 +5,10 @@
   --white-color: #FFFFFF;
   --text-color: #000000;
   --text-secondary: #5B5B5E;
-  --separator-color: #D4D6E0;
+  --separator-color: #cccccc;
 }
 
 body {
   font-family: 'Open Sans', sans-serif;
+  margin: 0;
 }
