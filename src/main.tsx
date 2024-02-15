@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { Menu } from './pages/Menu/Menu';
+import { RouterProvider, createBrowserRouter, defer } from 'react-router-dom';
 import { Cart } from './pages/Cart/Cart';
 import { MenuLayout } from './layout/MenuLayout/MenuLayout';
 import { Product } from './pages/Product/Product';
 import { PREFIX } from './helpers/api';
 import axios from 'axios';
+
+// eslint-disable-next-line react-refresh/only-export-components
+const Menu = lazy(() => import('./pages/Menu/Menu'));
 
 const router = createBrowserRouter([
 	{
@@ -16,7 +18,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				element: <Menu />
+				element: <Suspense fallback={<>Загрузка...</>}><Menu /></Suspense>
 			},
 			{
 				path: '/cart',
@@ -25,16 +27,14 @@ const router = createBrowserRouter([
 			{
 				path: '/product/:id',
 				element: <Product />,
+				errorElement: <>Ошибка загрузки</>,
 				loader: async ({ params }) => {
-					const { data } = await axios.get(`${PREFIX}/products/${params.id}`);
-					return data;
+					return defer({
+						data: await axios.get(`${PREFIX}/products/${params.id}`).then(data => data)
+					});
 				}
 			}
 		]
-	},
-	{
-		path: '/cart',
-		element: <Cart />
 	},
 	{
 		path: '*'
