@@ -3,8 +3,6 @@ import styles from './Card.module.css';
 import { CardProps } from './Card.props';
 
 function Card(props: CardProps) {
-	console.log(props.image);
-
 	return (
 		<Link to={`/product/${props.id}`} className={styles['link']}>
 			<div className={styles['card']}>
