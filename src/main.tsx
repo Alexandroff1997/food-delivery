@@ -7,6 +7,9 @@ import { MenuLayout } from './layout/MenuLayout/MenuLayout';
 import { Product } from './pages/Product/Product';
 import { PREFIX } from './helpers/api';
 import axios from 'axios';
+import { AuthLayout } from './layout/AuthLayout/AuthLayout';
+import { Login } from './pages/Login/Login';
+import { Register } from './pages/Register/Register';
 
 // eslint-disable-next-line react-refresh/only-export-components
 const Menu = lazy(() => import('./pages/Menu/Menu'));
@@ -33,6 +36,20 @@ const router = createBrowserRouter([
 						data: await axios.get(`${PREFIX}/products/${params.id}`).then(data => data)
 					});
 				}
+			}
+		]
+	},
+	{
+		path: '/auth',
+		element: <AuthLayout />,
+		children: [
+			{
+				path: 'login',
+				element: <Login />
+			}, 
+			{
+				path: 'register',
+				element: <Register />
 			}
 		]
 	},
