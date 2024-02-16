@@ -10,6 +10,7 @@ import axios from 'axios';
 import { AuthLayout } from './layout/AuthLayout/AuthLayout';
 import { Login } from './pages/Login/Login';
 import { Register } from './pages/Register/Register';
+import { RequireAuth } from './helpers/RequireAuth';
 
 // eslint-disable-next-line react-refresh/only-export-components
 const Menu = lazy(() => import('./pages/Menu/Menu'));
@@ -17,7 +18,7 @@ const Menu = lazy(() => import('./pages/Menu/Menu'));
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <MenuLayout />,
+		element: <RequireAuth><MenuLayout /></RequireAuth>,
 		children: [
 			{
 				path: '/',
